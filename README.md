@@ -1,3 +1,4 @@
+[![Python 3.9](https://img.shields.io/badge/python-3.9-blue.svg)](https://www.python.org/downloads/release/python-270/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Mavrikant/NLP-Corpus-Analyzer?color=green)](https://github.com/Mavrikant/NLP-Corpus-Analyzer) [![Open issues on GitHub](https://img.shields.io/github/issues-raw/Mavrikant/NLP-Corpus-Analyzer)](https://github.com/Mavrikant/NLP-Corpus-Analyzer/issues) [![Open pull requests on GitHub](https://img.shields.io/github/issues-pr-raw/Mavrikant/NLP-Corpus-Analyzer)](https://github.com/Mavrikant/NLP-Corpus-Analyzer/pulls) [![GitHub contributors](https://img.shields.io/github/contributors/Mavrikant/NLP-Corpus-Analyzer)](https://github.com/Mavrikant/NLP-Corpus-Analyzer/graphs/contributors)
 
 <div align="center">
   <a href="https://github.com/Mavrikant/NLP-Corpus-Analyze">
