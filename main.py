@@ -6,6 +6,7 @@ from builtins import str
 
 import nltk
 import tkinter as tk
+
 # nltk.download('punkt')
 from pathlib import Path
 from tkinter import ttk
@@ -18,16 +19,16 @@ k = 0.5
 root = tk.Tk()
 
 filename = tk.StringVar()
-filename.set('')
+filename.set("")
 
 textvariable_numOfSentences = tk.StringVar()
-textvariable_numOfSentences.set('')
+textvariable_numOfSentences.set("")
 
 textvariable_numOfAllWords = tk.StringVar()
-textvariable_numOfAllWords.set('')
+textvariable_numOfAllWords.set("")
 
 textvariable_numOfUniqueWords = tk.StringVar()
-textvariable_numOfUniqueWords.set('')
+textvariable_numOfUniqueWords.set("")
 
 numOfUniqueWords = 0
 
@@ -43,12 +44,11 @@ bigram_occurence_dict = {}
 
 
 def select_file():
-    filetypes = (('text files', '*.txt'), ('All files', '*.*'))
+    filetypes = (("text files", "*.txt"), ("All files", "*.*"))
     global filename
-    filename.set(fd.askopenfilename(
-        title='Open a file',
-        initialdir='/',
-        filetypes=filetypes))
+    filename.set(
+        fd.askopenfilename(title="Open a file", initialdir="/", filetypes=filetypes)
+    )
 
 
 def analyze_file():
@@ -58,16 +58,16 @@ def analyze_file():
     global sentences, allWords, uniqueWords
     clearData()
 
-    text = Path(filename.get()).read_text(encoding='utf-8').strip().lower()
+    text = Path(filename.get()).read_text(encoding="utf-8").strip().lower()
     text = re.sub(r"\n\s+", " ", text)  # remove empty space at the start of lines
 
-    sentences = nltk.sent_tokenize(text, language='english')
+    sentences = nltk.sent_tokenize(text, language="english")
     allWords = nltk.RegexpTokenizer(r"\w+").tokenize(text)
-    allWords.extend(['<s>'] * len(sentences))
-    allWords.extend(['</s>'] * len(sentences))
+    allWords.extend(["<s>"] * len(sentences))
+    allWords.extend(["</s>"] * len(sentences))
     uniqueWords = set([word.lower() for word in allWords if word.isalpha()])
-    uniqueWords.add('<s>')
-    uniqueWords.add('</s>')
+    uniqueWords.add("<s>")
+    uniqueWords.add("</s>")
 
     findbigrams()
     calculateOccurenceOfWords()
@@ -115,11 +115,21 @@ def fillTab2():
 
 def fillTab3():
     global word_occurence_dict
-    tab3_st.insert(tk.INSERT, "#" + " - " + "Word" + " \t\t " + "Occurance" + "\t\t" + "P()\n")
+    tab3_st.insert(
+        tk.INSERT, "#" + " - " + "Word" + " \t\t " + "Occurance" + "\t\t" + "P()\n"
+    )
     for idx, word in enumerate(word_occurence_dict):
-        tab3_st.insert(tk.INSERT,
-                       str(idx + 1) + " - " + word + " \t\t " + str(word_occurence_dict[word]) + " \t\t " + str(
-                           getUnigramProb(word)) + "\n")
+        tab3_st.insert(
+            tk.INSERT,
+            str(idx + 1)
+            + " - "
+            + word
+            + " \t\t "
+            + str(word_occurence_dict[word])
+            + " \t\t "
+            + str(getUnigramProb(word))
+            + "\n",
+        )
 
 
 def getUnigramProb(word):
@@ -128,11 +138,23 @@ def getUnigramProb(word):
 
 def fillTab4():
     global word_occurence_dict, bigram_occurence_dict
-    tab4_st.insert(tk.INSERT, "#" + " - " + "Bigram" + " \t\t\t " + "Occurance" + "\t\t" + "P()\n")
+    tab4_st.insert(
+        tk.INSERT, "#" + " - " + "Bigram" + " \t\t\t " + "Occurance" + "\t\t" + "P()\n"
+    )
     for idx, bigram in enumerate(bigram_occurence_dict):
-        tab4_st.insert(tk.INSERT, str(idx + 1) + " - P(" + bigram[1] + "|" + bigram[0] + ") \t\t\t " + str(
-            bigram_occurence_dict[bigram]) + "\t\t" + str(
-            getBigramProb(bigram)) + "\n")
+        tab4_st.insert(
+            tk.INSERT,
+            str(idx + 1)
+            + " - P("
+            + bigram[1]
+            + "|"
+            + bigram[0]
+            + ") \t\t\t "
+            + str(bigram_occurence_dict[bigram])
+            + "\t\t"
+            + str(getBigramProb(bigram))
+            + "\n",
+        )
 
 
 def getBigramProb(bigram):
@@ -145,11 +167,21 @@ def getBigramProb(bigram):
 
 def fillTab5():
     global word_occurence_dict
-    tab5_st.insert(tk.INSERT, "#" + " - " + "Word" + " \t\t " + "Occurance" + "\t\t" + "P()\n")
+    tab5_st.insert(
+        tk.INSERT, "#" + " - " + "Word" + " \t\t " + "Occurance" + "\t\t" + "P()\n"
+    )
     for idx, word in enumerate(word_occurence_dict):
-        tab5_st.insert(tk.INSERT,
-                       str(idx + 1) + " - " + word + " \t\t " + str(word_occurence_dict[word]) + " \t\t " + str(
-                           getUnigramProbSmooth(word)) + "\n")
+        tab5_st.insert(
+            tk.INSERT,
+            str(idx + 1)
+            + " - "
+            + word
+            + " \t\t "
+            + str(word_occurence_dict[word])
+            + " \t\t "
+            + str(getUnigramProbSmooth(word))
+            + "\n",
+        )
 
 
 def getUnigramProbSmooth(word):
@@ -161,23 +193,41 @@ def getUnigramProbSmooth(word):
 
 def fillTab6():
     global word_occurence_dict, bigram_occurence_dict
-    tab6_st.insert(tk.INSERT, "#" + " - " + "Bigram" + " \t\t\t " + "Occurance" + "\t\t" + "P()\n")
+    tab6_st.insert(
+        tk.INSERT, "#" + " - " + "Bigram" + " \t\t\t " + "Occurance" + "\t\t" + "P()\n"
+    )
     for idx, bigram in enumerate(bigram_occurence_dict):
-        tab6_st.insert(tk.INSERT, str(idx + 1) + " - P(" + bigram[1] + "|" + bigram[0] + ") \t\t\t " + str(
-            bigram_occurence_dict[bigram]) + "\t\t" + str(
-            getBigramProbSmooth(bigram)) + "\n")
+        tab6_st.insert(
+            tk.INSERT,
+            str(idx + 1)
+            + " - P("
+            + bigram[1]
+            + "|"
+            + bigram[0]
+            + ") \t\t\t "
+            + str(bigram_occurence_dict[bigram])
+            + "\t\t"
+            + str(getBigramProbSmooth(bigram))
+            + "\n",
+        )
 
 
 def getBigramProbSmooth(bigram):
     try:
         if bigram in bigram_occurence_dict:
-            return (bigram_occurence_dict[bigram] + k) / (word_occurence_dict[bigram[0]] + k * (len(uniqueWords) - 2))
+            return (bigram_occurence_dict[bigram] + k) / (
+                word_occurence_dict[bigram[0]] + k * (len(uniqueWords) - 2)
+            )
         elif bigram[0] in word_occurence_dict:
-            return (0 + k) / (word_occurence_dict[bigram[0]] + k * (len(uniqueWords) - 2))
+            return (0 + k) / (
+                word_occurence_dict[bigram[0]] + k * (len(uniqueWords) - 2)
+            )
         else:
             return (0 + k) / (0 + k * (len(uniqueWords) - 2))
     except:
-        print("except getBigramProbSmooth", bigram)  # There is key error on dict in one case
+        print(
+            "except getBigramProbSmooth", bigram
+        )  # There is key error on dict in one case
         return 1
 
 
@@ -194,7 +244,7 @@ def fillTab7():
         str += word1
         str += "\t"
         for word2 in uniqueWords:
-            str += ("%.3f" % getBigramProbSmooth((word1, word2)))
+            str += "%.3f" % getBigramProbSmooth((word1, word2))
             str += "\t"
         str += "\n"
     tab7_st.insert(tk.INSERT, str)
@@ -203,7 +253,11 @@ def fillTab7():
 def findbigrams():
     global allBigrams, uniqueBigrams
     for sen in sentences:
-        allBigrams += list(bigrams(pad_both_ends(nltk.RegexpTokenizer(r"\w+").tokenize(sen.lower()), n=2)))
+        allBigrams += list(
+            bigrams(
+                pad_both_ends(nltk.RegexpTokenizer(r"\w+").tokenize(sen.lower()), n=2)
+            )
+        )
 
     uniqueBigrams = set(allBigrams)
 
@@ -215,7 +269,8 @@ def calculateOccurenceOfWords():
         word_occurence_dict[wordd] = allWords.count(wordd)
 
     word_occurence_dict = dict(
-        sorted(word_occurence_dict.items(), key=lambda item: item[1], reverse=True))  # sort dictionary based on values
+        sorted(word_occurence_dict.items(), key=lambda item: item[1], reverse=True)
+    )  # sort dictionary based on values
 
 
 def calculateOccurenceOfBigrams():
@@ -225,8 +280,8 @@ def calculateOccurenceOfBigrams():
         bigram_occurence_dict[bigram] = allBigrams.count(bigram)
 
     bigram_occurence_dict = dict(
-        sorted(bigram_occurence_dict.items(), key=lambda item: item[1],
-               reverse=True))  # sort dictionary based on values
+        sorted(bigram_occurence_dict.items(), key=lambda item: item[1], reverse=True)
+    )  # sort dictionary based on values
 
 
 def find_prob_of_sentence():
@@ -234,10 +289,22 @@ def find_prob_of_sentence():
     prob = 1
     detailstr = ""
     string = entry.get()
-    sentenceBigrams = list(bigrams(pad_both_ends(nltk.RegexpTokenizer(r"\w+").tokenize(string.lower()), n=2)))
+    sentenceBigrams = list(
+        bigrams(
+            pad_both_ends(nltk.RegexpTokenizer(r"\w+").tokenize(string.lower()), n=2)
+        )
+    )
     for big in sentenceBigrams:
         prob = prob * getBigramProbSmooth(big)
-        detailstr += "P(" + big[1] + "|" + big[0] + ") = " + str(("%.3f" % getBigramProbSmooth(big))) + "\n"
+        detailstr += (
+            "P("
+            + big[1]
+            + "|"
+            + big[0]
+            + ") = "
+            + str(("%.3f" % getBigramProbSmooth(big)))
+            + "\n"
+        )
 
     tab8ResultLabel.configure(text=str(prob))
     tab8DetailsLabel.configure(text=detailstr)
@@ -247,17 +314,17 @@ def find_prob_of_sentence():
 
 
 # create the root window
-root.title('NLP Corpus Analyzer')
-root.iconbitmap('images/icon.ico')
+root.title("NLP Corpus Analyzer")
+root.iconbitmap("images/icon.ico")
 root.resizable(False, False)
-root.geometry('900x600')
+root.geometry("900x600")
 root.rowconfigure(0, weight=0)
 root.rowconfigure(1, weight=0)
 root.rowconfigure(2, weight=1)
 
 # open button
-open_button = ttk.Button(root, text='Open File', command=select_file)
-run_button = ttk.Button(root, text='ANALYZE', command=analyze_file)
+open_button = ttk.Button(root, text="Open File", command=select_file)
+run_button = ttk.Button(root, text="ANALYZE", command=analyze_file)
 
 filename_label = ttk.Label(root, text="Selected Filename")
 filename_label.grid(column=0, row=1, sticky=tk.NW, padx=5, pady=5)
@@ -334,7 +401,9 @@ labela.pack(pady=20)
 entry = tk.Entry(tab8, width=40)
 entry.focus_set()
 entry.pack()
-ttk.Button(tab8, text="Calculate", width=20, command=find_prob_of_sentence).pack(pady=20)
+ttk.Button(tab8, text="Calculate", width=20, command=find_prob_of_sentence).pack(
+    pady=20
+)
 tab8ResultLabel = tk.Label(tab8, text="", font=("Courier 22 bold"))
 tab8ResultLabel.pack()
 tab8DetailsLabel = tk.Label(tab8, text="", font=("Courier 11 "))
