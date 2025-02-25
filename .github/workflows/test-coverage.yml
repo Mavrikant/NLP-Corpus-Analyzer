@@ -23,6 +23,9 @@ jobs:
         
     - name: Install dependencies
       run: |
+        sudo apt-get install -y libgl1-mesa-glx
+        sudo apt-get install -y libtk-img lib32gcc1
+        export DISPLAY=:0
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install pytest pytest-cov
