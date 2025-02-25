@@ -23,7 +23,7 @@ jobs:
         
     - name: Install dependencies
       run: |
-        sudo apt-get install -y libgl1-mesa-glx
+        sudo apt-get update
         sudo apt-get install -y libtk-img lib32gcc1
         export DISPLAY=:0
         python -m pip install --upgrade pip
