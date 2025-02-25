@@ -23,8 +23,6 @@ jobs:
         
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y libtk-img lib32gcc1
         export DISPLAY=:0
         python -m pip install --upgrade pip
         pip install -r requirements.txt
