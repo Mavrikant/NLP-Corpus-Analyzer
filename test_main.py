@@ -5,7 +5,17 @@ from collections import Counter
 import tkinter as tk
 from tkinter import ttk
 from tkinter.scrolledtext import ScrolledText
+import os
 
+# Handle headless environment
+if 'DISPLAY' not in os.environ:
+    import platform
+    if platform.system() != 'Windows':
+        try:
+            import tkinter._test as tk_test
+            os.environ['DISPLAY'] = ':0'
+        except ImportError:
+            pass
 
 @pytest.fixture(scope="class")
 def analyzer():
