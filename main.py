@@ -18,6 +18,7 @@ from nltk.lm.preprocessing import pad_both_ends
 
 try:
     from tkinterdnd2 import DND_FILES, TkinterDnD
+
     DRAG_DROP_SUPPORTED = True
 except ImportError:
     DRAG_DROP_SUPPORTED = False
@@ -28,6 +29,7 @@ class TreeviewWithScroll(ttk.Frame):
     Custom Treeview widget with integrated vertical and horizontal scrollbars.
     Provides built-in sorting functionality for each column.
     """
+
     def __init__(self, parent, columns, show="headings"):
         super().__init__(parent)
         # Create Treeview
@@ -84,6 +86,7 @@ class CorpusAnalyzer:
     - Bigram probability matrix visualization
     - Sentence probability calculation
     """
+
     def __init__(self):
         # Constants
         self.smoothing_k = 0.5
@@ -93,7 +96,10 @@ class CorpusAnalyzer:
             nltk.download("punkt", quiet=True)
             nltk.download("punkt_tab", quiet=True)
         except Exception as e:
-            tk.messagebox.showerror("Error", f"Failed to download NLTK data: {str(e)}\nPlease check your internet connection.")
+            tk.messagebox.showerror(
+                "Error",
+                f"Failed to download NLTK data: {str(e)}\nPlease check your internet connection.",
+            )
             raise
 
         # Create tokenizer once
@@ -155,7 +161,7 @@ class CorpusAnalyzer:
         # Set up drag and drop only if supported
         if DRAG_DROP_SUPPORTED:
             self.root.drop_target_register(DND_FILES)
-            self.root.dnd_bind('<<Drop>>', self.handle_drop)
+            self.root.dnd_bind("<<Drop>>", self.handle_drop)
 
     def setup_ui(self):
         """Set up the user interface components."""
@@ -171,10 +177,10 @@ class CorpusAnalyzer:
         )
 
         # Bind keyboard shortcuts
-        self.root.bind('<Control-o>', lambda e: self.select_file())
-        self.root.bind('<Control-r>', lambda e: self.analyze_button_click())
-        self.root.bind('<Control-w>', lambda e: self.on_closing())
-        self.root.bind('<Escape>', lambda e: self.clear_data())
+        self.root.bind("<Control-o>", lambda e: self.select_file())
+        self.root.bind("<Control-r>", lambda e: self.analyze_button_click())
+        self.root.bind("<Control-w>", lambda e: self.on_closing())
+        self.root.bind("<Escape>", lambda e: self.clear_data())
 
     def create_main_layout(self):
         """Create the main application layout with buttons and labels."""
@@ -250,13 +256,15 @@ class CorpusAnalyzer:
         """Handle drag and drop of files"""
         try:
             file_path = event.data
-            if file_path.lower().endswith('.txt'):
+            if file_path.lower().endswith(".txt"):
                 self.filename.set(file_path)
                 self.analyze_file()
             else:
                 tk.messagebox.showerror("Error", "Please drop a .txt file")
         except Exception as e:
-            tk.messagebox.showerror("Error", f"Failed to process dropped file: {str(e)}")
+            tk.messagebox.showerror(
+                "Error", f"Failed to process dropped file: {str(e)}"
+            )
 
     def analyze_file(self):
         """Process the selected corpus file and perform text analysis."""
@@ -281,7 +289,7 @@ class CorpusAnalyzer:
                 text = file_path.read_text(encoding="utf-8").strip().lower()
             except UnicodeDecodeError:
                 # Try with different encodings if UTF-8 fails
-                encodings = ['latin1', 'cp1252', 'ascii']
+                encodings = ["latin1", "cp1252", "ascii"]
                 for encoding in encodings:
                     try:
                         text = file_path.read_text(encoding=encoding).strip().lower()
@@ -289,7 +297,9 @@ class CorpusAnalyzer:
                     except UnicodeDecodeError:
                         continue
                 else:
-                    raise UnicodeDecodeError("Failed to decode file with any known encoding")
+                    raise UnicodeDecodeError(
+                        "Failed to decode file with any known encoding"
+                    )
 
             text = re.sub(r"\n\s+", " ", text)
 
