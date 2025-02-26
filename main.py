@@ -106,7 +106,7 @@ class CorpusAnalyzer:
             self.root = tk.Tk()
 
         self.root.title("NLP Corpus Analyzer")
-        self.root.geometry("900x550")  # Reduced from 600 to 550
+        self.root.geometry("1000x600")
         self.root.resizable(False, False)
 
         # Data structures
